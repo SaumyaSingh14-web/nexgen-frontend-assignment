@@ -14,7 +14,7 @@ function BidDetails() {
       return object.Customer.id === id;
     });
     setCurrentBidDetail(detail);
-  });
+  }, [data, id]);
 
   if (loading) {
     return (
