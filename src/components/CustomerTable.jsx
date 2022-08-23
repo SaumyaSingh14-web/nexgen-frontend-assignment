@@ -2,10 +2,12 @@ import { useState } from "react";
 import avatar from "../images/avatar.webp";
 import TableData from "./TableData";
 import TableHead from "./TableHead";
+import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
 
 function CustomerTable({ data }) {
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(5);
+  const [toggleBidding, setToggleBidding] = useState(false);
 
   const handleNextPage = () => {
     setStart(start + 5);
@@ -24,7 +26,16 @@ function CustomerTable({ data }) {
             <TableHead title="Email" />
             <TableHead title="Phone" />
             <TableHead title="Premium" />
-            <TableHead title="Max Bid" />
+            <TableHead
+              title={`${toggleBidding ? "Min" : "Max"} Bid`}
+              onClick={() => setToggleBidding(!toggleBidding)}
+            >
+              {toggleBidding ? (
+                <AiOutlineArrowDown className="text-white text-xl mt-4 mr-8" />
+              ) : (
+                <AiOutlineArrowUp className="text-white text-xl mt-4 mr-8" />
+              )}
+            </TableHead>
           </tr>
         </thead>
         <tbody>
@@ -44,7 +55,13 @@ function CustomerTable({ data }) {
               <TableData data={customer?.Customer?.email} />
               <TableData data={customer?.Customer?.phone} />
               <TableData data={customer?.Customer?.hasPremium ? "Yes" : "No"} />
-              <TableData data={customer?.Customer?.bids[0]} />
+              <TableData
+                data={
+                  toggleBidding
+                    ? Math.min(...customer?.Customer?.bids)
+                    : Math.max(...customer?.Customer?.bids)
+                }
+              />
             </tr>
           ))}
         </tbody>
