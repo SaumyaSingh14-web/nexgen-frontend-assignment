@@ -2,6 +2,7 @@ import CustomerTable from "./components/CustomerTable";
 import axios from "axios";
 import * as _ from "lodash";
 import { useEffect, useState } from "react";
+import AppContext from "./context"
 
 function App() {
   const [customerData, setCustomerData] = useState();
@@ -12,6 +13,7 @@ function App() {
     },
   ], [orderBy ? 'desc' : 'asc']);
   console.log("Sorted Data", sortedCustomerData);
+
   const customerAPICall = async () => {
     try {
       const response = await axios.get("https://nex-g.herokuapp.com");
@@ -26,9 +28,9 @@ function App() {
     customerAPICall();
   }, []);
   return (
-    <div>
-      <CustomerTable data = {sortedCustomerData} onClick={() => setOrderBy(!orderBy)} orderBy={orderBy}/>   
-    </div>
+    <AppContext.Provider value={{data: sortedCustomerData}}>
+      <CustomerTable onClick={() => setOrderBy(!orderBy)} orderBy={orderBy}/>   
+    </AppContext.Provider>
   );
 }
 

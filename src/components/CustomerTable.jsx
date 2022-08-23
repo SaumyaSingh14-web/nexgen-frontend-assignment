@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import avatar from "../images/avatar.webp";
 import TableData from "./TableData";
 import TableHead from "./TableHead";
 import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
 import * as _ from "lodash";
+import AppContext from "../context";
 
-function CustomerTable({ data, onClick, orderBy }) {
+function CustomerTable({ onClick, orderBy }) {
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(5);
   const [toggleBidding, setToggleBidding] = useState(false);
+  const { data } = useContext(AppContext);
 
   const handleNextPage = () => {
     setStart(start + 5);
