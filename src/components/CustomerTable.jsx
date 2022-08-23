@@ -3,8 +3,9 @@ import avatar from "../images/avatar.webp";
 import TableData from "./TableData";
 import TableHead from "./TableHead";
 import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
+import * as _ from "lodash";
 
-function CustomerTable({ data }) {
+function CustomerTable({ data, onClick }) {
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(5);
   const [toggleBidding, setToggleBidding] = useState(false);
@@ -22,7 +23,14 @@ function CustomerTable({ data }) {
       <table className="min-w-full text-center">
         <thead className="border-b bg-gray-800">
           <tr>
-            <TableHead title="Name" />
+            <TableHead title="Name" onClick={onClick}>
+              {toggleBidding ? (
+                <AiOutlineArrowDown className="text-white text-xl mt-4 mr-8" />
+              ) : (
+                <AiOutlineArrowUp className="text-white text-xl mt-4 mr-8" />
+              )}
+            </TableHead>
+            <TableHead title="Bid" />
             <TableHead title="Email" />
             <TableHead title="Phone" />
             <TableHead title="Premium" />
@@ -52,6 +60,7 @@ function CustomerTable({ data }) {
                   " " +
                   customer?.Customer?.lastname}
               </td>
+              <TableData data={customer?.Bid?.amount} />
               <TableData data={customer?.Customer?.email} />
               <TableData data={customer?.Customer?.phone} />
               <TableData data={customer?.Customer?.hasPremium ? "Yes" : "No"} />
