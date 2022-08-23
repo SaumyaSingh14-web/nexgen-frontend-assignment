@@ -27,7 +27,7 @@ function App() {
   }, []);
   return (
     <div>
-      <CustomerTable data = {sortedCustomerData} onClick={() => setOrderBy(!orderBy)}/>   
+      <CustomerTable data = {sortedCustomerData} onClick={() => setOrderBy(!orderBy)} orderBy={orderBy}/>   
     </div>
   );
 }

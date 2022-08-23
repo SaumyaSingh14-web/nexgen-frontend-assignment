@@ -5,7 +5,7 @@ import TableHead from "./TableHead";
 import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
 import * as _ from "lodash";
 
-function CustomerTable({ data, onClick }) {
+function CustomerTable({ data, onClick, orderBy }) {
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(5);
   const [toggleBidding, setToggleBidding] = useState(false);
@@ -24,7 +24,7 @@ function CustomerTable({ data, onClick }) {
         <thead className="border-b bg-gray-800">
           <tr>
             <TableHead title="Name" onClick={onClick}>
-              {toggleBidding ? (
+              {orderBy ? (
                 <AiOutlineArrowDown className="text-white text-xl mt-4 mr-8" />
               ) : (
                 <AiOutlineArrowUp className="text-white text-xl mt-4 mr-8" />
