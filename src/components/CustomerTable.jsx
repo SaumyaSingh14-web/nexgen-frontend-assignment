@@ -2,15 +2,21 @@ import { useContext, useState } from "react";
 import avatar from "../images/avatar.webp";
 import TableData from "./TableData";
 import TableHead from "./TableHead";
-import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
-import * as _ from "lodash";
+import {
+  AiOutlineArrowUp,
+  AiOutlineArrowDown,
+  AiOutlineLoading,
+} from "react-icons/ai";
 import AppContext from "../context";
+import { useNavigate } from "react-router-dom";
 
 function CustomerTable({ onClick, orderBy }) {
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(5);
   const [toggleBidding, setToggleBidding] = useState(false);
-  const { data } = useContext(AppContext);
+  const { data, loading } = useContext(AppContext);
+
+  const navigate = useNavigate();
 
   const handleNextPage = () => {
     setStart(start + 5);
@@ -20,6 +26,15 @@ function CustomerTable({ onClick, orderBy }) {
     setStart(start - 5);
     setEnd(end - 5);
   };
+
+  if (loading) {
+    return (
+      <div className="h-screen flex flex-row items-center justify-center">
+        <AiOutlineLoading className="animate-spin h-14 w-14" />
+      </div>
+    );
+  }
+
   return (
     <div>
       <table className="min-w-full text-center">
@@ -32,7 +47,7 @@ function CustomerTable({ onClick, orderBy }) {
                 <AiOutlineArrowUp className="text-white text-xl mt-4 mr-8" />
               )}
             </TableHead>
-            <TableHead title="Bid" />
+            <TableHead title="Bid Amount" />
             <TableHead title="Email" />
             <TableHead title="Phone" />
             <TableHead title="Premium" />
@@ -50,7 +65,13 @@ function CustomerTable({ onClick, orderBy }) {
         </thead>
         <tbody>
           {data?.slice(start, end)?.map((customer, index) => (
-            <tr key={index} className="bg-white border-b">
+            <tr
+              onClick={() =>
+                navigate(`/customer-bid-detail/${customer?.Customer?.id}`)
+              }
+              key={index}
+              className="bg-white border-b hover:bg-gray-200"
+            >
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 <img
                   className="h-6 w-6 m-auto"
