@@ -5,10 +5,14 @@ import AppContext from "../context";
 import { AiOutlineLoading } from "react-icons/ai";
 
 function BidDetails() {
+  // extracting id from url
   const { id } = useParams();
+
   const { data, loading } = useContext(AppContext);
   const [currentBidDetail, setCurrentBidDetail] = useState();
   const navigate = useNavigate();
+
+  // extracting the exact customer details who was clicked
   useEffect(() => {
     const detail = _.find(data, function (object) {
       return object.Customer.id === id;

@@ -16,8 +16,10 @@ function CustomerTable({ onClick, orderBy }) {
   const [toggleBidding, setToggleBidding] = useState(false);
   const { data, loading } = useContext(AppContext);
 
+  // for directing to different page
   const navigate = useNavigate();
 
+  // pagination
   const handleNextPage = () => {
     setStart(start + 5);
     setEnd(end + 5);
@@ -27,6 +29,7 @@ function CustomerTable({ onClick, orderBy }) {
     setEnd(end - 5);
   };
 
+  // restrict the rendering of table till the api is not called
   if (loading) {
     return (
       <div className="h-screen flex flex-row items-center justify-center">
@@ -64,6 +67,7 @@ function CustomerTable({ onClick, orderBy }) {
           </tr>
         </thead>
         <tbody>
+          {/* slice will restrict the elements in array to map */}
           {data?.slice(start, end)?.map((customer, index) => (
             <tr
               onClick={() =>

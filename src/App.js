@@ -10,6 +10,8 @@ function App() {
   const [customerData, setCustomerData] = useState();
   const [orderBy, setOrderBy] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // using lodash for sorting on the basis of ascending or descending
   const sortedCustomerData = _.orderBy(
     customerData,
     [
@@ -21,6 +23,7 @@ function App() {
   );
   console.log("Sorted Data", sortedCustomerData);
 
+  // fetching customer details
   const customerAPICall = async () => {
     try {
       setLoading(true);
@@ -37,6 +40,8 @@ function App() {
     customerAPICall();
   }, []);
   return (
+
+    // using context api 
     <AppContext.Provider value={{ data: sortedCustomerData, loading }}>
       <Router>
         <Routes>
